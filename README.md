@@ -1,4 +1,16 @@
-# Suplemento newclaw para PowerPoint
+# newclaw-powerpoint — suplemento do NewClaw para o PowerPoint
+
+> **Integração opcional, fora do núcleo** (desde 04/11/2026). Antes este suplemento morava em `addins/powerpoint-addin/` do
+> repositório do NewClaw, e o núcleo tinha código só para ele (a ferramenta `powerpoint_control`, o contexto do slide aberto,
+> uma fila de comandos e uma exceção de origem). Agora ele conversa com o NewClaw **só pelo contrato público do turno**
+> (`POST /api/chat` + `GET /api/chat/outbox`, ver `docs/CONTRATO_DO_TURNO.md` no NewClaw), como a interface de voz
+> (newclaw-ivox). O `server.js` serve o painel e repassa essas duas rotas ao NewClaw, então o NewClaw não precisa abrir
+> exceção de origem. Os erros e as dependências deste suplemento ficam aqui, sem prender o NewClaw.
+>
+> O que mudou para quem usa: o painel conversa e insere na apresentação o `.pptx` que vier na resposta, como antes; o
+> agente não lê nem edita mais o slide aberto por comando (a leitura do deck da RFC-009 saiu). O pedido leva uma linha com o
+> arquivo e o slide ativo. Testes: `npm test` (o repasse do `server.js`).
+
 
 Painel de tarefas (task pane) que conversa com o newclaw (mesma pipeline usada por
 Telegram/Discord/dashboard, via `POST /api/chat`) e insere automaticamente na
@@ -15,7 +27,7 @@ apresentação aberta qualquer `.pptx` que o agente gerar (via
 ## Instalação automática (recomendado)
 
 ```powershell
-cd addins\powerpoint-addin
+cd newclaw-powerpoint
 .\install.ps1
 ```
 

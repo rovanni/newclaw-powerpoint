@@ -97,6 +97,8 @@ module.exports = async (env, options) => {
         options: env.WEBPACK_BUILD || options.https !== undefined ? options.https : await getHttpsOptions(),
       },
       port: process.env.npm_package_config_dev_server_port || 3000,
+      // Mesmo repasse do server.js (produção): o suplemento fala com o NewClaw pela própria origem.
+      proxy: [{ context: ["/api/chat"], target: process.env.NEWCLAW_URL || "http://127.0.0.1:3090", changeOrigin: true }],
     },
   };
 
