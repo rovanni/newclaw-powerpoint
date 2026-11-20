@@ -180,6 +180,7 @@ Office.onReady(async (info) => {
     const event = evt as KeyboardEvent;
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
+      if (event.isComposing || event.keyCode === 229) return;
       void sendMessage();
     }
   });
